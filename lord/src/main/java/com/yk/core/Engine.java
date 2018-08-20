@@ -27,12 +27,12 @@ public class Engine {
 
     public static void main(String[] args) throws  Exception{
 //        new Thread(new Raider()).run();
-        addressQueue.add("192.168.1.175");
+        addressQueue.add("localhost");
 
         System.out.print("0======{}===================>");
         String ip=addressQueue.poll();
-        String result=CmdExeUtil.exec(new String[]{"cd c:\\work\\redis & redis-cli.exe -h "+ip+" -p 6379",""});
-        System.out.println(result);
+        CmdExeUtil.exec("redis-cli -h "+ip+" -p 6379");
+
 
 
 //        ReadFromFile.WriteStringToFile("C:\\Users\\hhg\\Desktop\\ip.txt","192.168.1.173");

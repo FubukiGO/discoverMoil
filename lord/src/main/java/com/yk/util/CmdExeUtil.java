@@ -34,7 +34,7 @@ public class CmdExeUtil {
         return out + error;
     }
 
-    public static String exec(String [] cmd){
+    public static String exec(String cmd){
         Runtime runtime = Runtime.getRuntime();
         StringBuffer sb=new StringBuffer();
         try {

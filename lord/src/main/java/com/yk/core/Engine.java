@@ -1,8 +1,12 @@
 package com.yk.core;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xiaoleilu.hutool.http.HttpUtil;
+import com.yk.common.Cmd;
 import com.yk.service.impl.Raider;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -11,6 +15,17 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @Description:
  * @Date: 上午10:30 2018/8/20
  */
+
+import com.yk.util.CmdExeUtil;
+import com.yk.util.ReadFromFile;
+import com.yk.util.Util;
+import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.exec.ExecuteWatchdog;
+import org.apache.commons.exec.PumpStreamHandler;
+import org.apache.commons.io.output.ByteArrayOutputStream;
+
+import java.util.List;
 
 public class Engine {
 
@@ -24,15 +39,7 @@ public class Engine {
         }
 
         new Thread(new Raider()).run();
-//        addressQueue.add("localhost");
-//
-//        System.out.print("0======{}===================>");
-//        String ip=addressQueue.poll();
-//        CmdExeUtil.exec("redis-cli -h "+ip+" -p 6379");
 
-
-
-//        ReadFromFile.WriteStringToFile("C:\\Users\\hhg\\Desktop\\ip.txt","192.168.1.173");
 
 
 

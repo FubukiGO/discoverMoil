@@ -1,5 +1,6 @@
 package com.yk.util;
 
+import com.yk.common.Cmd;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteWatchdog;
@@ -14,16 +15,14 @@ import java.io.InputStreamReader;
  */
 public class CmdExeUtil {
 
-    public static String cmdExe(String cmdLin) throws Exception{
+    public static String cmdExe(CommandLine cmdLine) throws Exception{
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         //接收异常结果流
         ByteArrayOutputStream errorStream = new ByteArrayOutputStream();
-
-        CommandLine cmdLine = CommandLine.parse(cmdLin);
-        DefaultExecutor exec = new DefaultExecutor();
+        DefaultExecutor exec=new DefaultExecutor();
         exec.setExitValues(null);
         //设置一分钟超时
-        ExecuteWatchdog watchdog = new ExecuteWatchdog(60 * 1000);
+        ExecuteWatchdog watchdog = new ExecuteWatchdog(10 * 1000);
         exec.setWatchdog(watchdog);
         PumpStreamHandler streamHandler = new PumpStreamHandler(outputStream, errorStream);
         exec.setStreamHandler(streamHandler);
@@ -34,21 +33,27 @@ public class CmdExeUtil {
         return out + error;
     }
 
-    public static String exec(String cmd){
-        Runtime runtime = Runtime.getRuntime();
+    public static Process exec(String cmd,Runtime runtime){
         StringBuffer sb=new StringBuffer();
+        Process process=null;
         try {
-            Process process = runtime.exec(cmd);
-            String line = null;
-            InputStreamReader isr = new InputStreamReader(process.getInputStream());
-            BufferedReader br = new BufferedReader(isr);
-
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
+            process = runtime.exec(cmd);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return sb.toString();
+        return process;
     }
+
+    public static Runtime getRuntime(){
+        return Runtime.getRuntime();
+    }
+
+
+
+    public static String linkRedis(String ip,String cmd) throws Exception{
+        return cmdExe(CommandLine.parse(Cmd.linkCmd.replaceAll("#host",ip)+cmd));
+    }
+
+
+
 }

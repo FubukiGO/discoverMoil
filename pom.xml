@@ -13,8 +13,10 @@
         <java.version>1.8</java.version>
         <javadoc.version>3.0.0</javadoc.version>
         <commons-exec>1.3</commons-exec>
-        <hutool.version>3.3.2</hutool.version>
         <fastjson.version>1.1.43</fastjson.version>
+        <log4j2.version>2.11.1</log4j2.version>
+        <disruptor.version>3.4.2</disruptor.version>
+        <guava.version>21.0</guava.version>
     </properties>
 
     <modules>

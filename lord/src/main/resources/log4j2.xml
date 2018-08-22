@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="ERROR">
+    <Properties>
+        <Property name="dir">.</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="STDOUT">
+            <PatternLayout
+                    pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"/>
+        </Console>
+        <RollingFile name="LogFile" fileName="${dir}/logs/log4j.log"
+                     filePattern="${dir}/log4j.log.%d{yyyy-MM-dd}.part%i.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="250 MB"/>
+                <TimeBasedTriggeringPolicy interval="10" modulate="true"/>
+            </Policies>
+            <!--自动删除超过120天的日志压缩文件-->
+            <DefaultRolloverStrategy>
+                <Delete basePath="${dir}" maxDepth="2">
+                    <IfFileName glob="*/log4j-error.log.*.gz"/>
+                    <IfLastModified age="20d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <!--错误日志入文件-->
+        <RollingFile name="LogFileError" fileName="${dir}/logs/log4j-error.log"
+                     filePattern="${dir}/log4j-error.log.%d{yyyy-MM-dd}.part%i.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="250 MB"/>
+                <TimeBasedTriggeringPolicy interval="24" modulate="true"/>
+            </Policies>
+            <!--自动删除超过30天的日志压缩文件-->
+            <DefaultRolloverStrategy>
+                <Delete basePath="${dir}" maxDepth="2">
+                    <IfFileName glob="*/log4j-error.log.*.gz"/>
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <!--采用异步输出日志-->
+        <AsyncLogger name="com.yk" level="INFO" additivity="false" includeLocation="true">
+            <!--写入info级别-->
+            <AppenderRef ref="LogFile"/>
+            <!--写入error级别-->
+            <AppenderRef ref="LogFileError" level="ERROR"/>
+            <AppenderRef ref="STDOUT"/>
+        </AsyncLogger>
+    </Loggers>
+</Configuration>

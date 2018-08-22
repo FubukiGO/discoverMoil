@@ -1,19 +1,16 @@
 package com.yk.util;
 
-import com.yk.common.Cmd;
+import com.yk.commons.constant.Cmd;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.PumpStreamHandler;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 /**
  * Created by hhg on 2018/8/20.
  */
-public class CmdExeUtil {
+public class CommandExecUtil {
 
     public static String cmdExe(CommandLine cmdLine) throws Exception{
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

@@ -1,4 +1,4 @@
-package com.yk.common;
+package com.yk.commons.constant;
 
 public interface Cmd {
     String linkCmd="redis-cli -h #host -p 6379 ";

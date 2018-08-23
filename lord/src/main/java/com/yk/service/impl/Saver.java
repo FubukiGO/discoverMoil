@@ -1,11 +1,14 @@
 package com.yk.service.impl;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import com.yk.core.Engine;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.List;
 
 public class Saver implements Runnable {
     private static Logger logger = LogManager.getLogger();
@@ -24,16 +27,24 @@ public class Saver implements Runnable {
     @Override
     public void run() {
         try {
+            List<String> list = Lists.newArrayList();
             for (; ; ) {
                 String url = Engine.routeQueue.poll();
-                if (url == null) {
-                    Thread.sleep(5000L);
-                } else {
-                    File file = new File("./result/half-moil.db");
+                if (url == null && list.size() > 0) {
+                    File file = new File("./half-moil.db");
                     if (!file.exists()) file.createNewFile();
                     FileWriter writer = new FileWriter(file, true);
 
-                    writer.write(url);
+                    writer.write(Joiner.on("\r\n").join(list) + "\r\n");
+                    writer.flush();
+                    writer.close();
+                    writer = null;
+                    logger.info("文件已保存,新增{}条", list.size());
+                    list.clear();
+                } else if (url != null) {
+                    list.add(url);
+                } else {
+                    Thread.sleep(5000L);
                 }
             }
         } catch (Exception e) {

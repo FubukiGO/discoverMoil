@@ -21,7 +21,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Engine {
     private static final Logger logger = LogManager.getLogger();
 
-
     public static Queue<String> routeQueue = new LinkedBlockingQueue<>();
 
     public static ExecutorService pool1 = ThreadPoolBuilder.build("raider", 10, 200);
@@ -30,7 +29,10 @@ public class Engine {
 
     public static void main(String[] args) throws Exception {
         logger.info("===============start!================");
-        args = new String[]{"http://ipblock.chacuo.net/down/t_txt=c_CN"};
+        if (args.length ==0 ) {
+            logger.warn("args can not was null");
+            System.exit(0);
+        }
         pool2.execute(new Saver());
         ScannerHandler scannerHandler = new ScannerHandler(args);
         scannerHandler.__START__();

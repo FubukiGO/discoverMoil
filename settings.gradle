@@ -1,0 +1,4 @@
+rootProject.name = 'discoverMoil'
+include ':lord'
+
+project(':lord').projectDir = "$rootDir/lord" as File

@@ -12,7 +12,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.concurrent.ExecutorService;
 import java.util.regex.Matcher;
 
 import static com.yk.core.Engine.pool1;
@@ -69,8 +68,10 @@ public class ScannerHandler {
                         }
                     }
                     matcher = null;
-                    if (StringUtils.isNotBlank(route))
+                    if (StringUtils.isNotBlank(route)){
                         pool1.execute(new Raider(route));
+                        Engine.localScreen.appendText(route);
+                    }
                     logger.info(route);
                 }
             } catch (Exception e) {

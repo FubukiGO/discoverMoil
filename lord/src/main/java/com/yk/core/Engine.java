@@ -1,9 +1,6 @@
 package com.yk.core;
 
-import com.yk.service.handler.ScannerHandler;
-import com.yk.service.impl.Saver;
 import com.yk.util.ThreadPoolBuilder;
-import org.apache.commons.exec.Executor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,16 +22,30 @@ public class Engine {
 
     public static ExecutorService pool1 = ThreadPoolBuilder.build("raider", 10, 200);
 
-    static ExecutorService pool2 = Executors. newSingleThreadExecutor();
+    static ExecutorService pool2 = Executors.newSingleThreadExecutor();
+
+    static String[] localArgs = null;
+
+    public static Screen localScreen = null;
 
     public static void main(String[] args) throws Exception {
-        logger.info("===============start!================");
-        if (args.length ==0 ) {
+        if (args.length == 0) {
             logger.warn("args can not was null");
             System.exit(0);
-        }
-        pool2.execute(new Saver());
-        ScannerHandler scannerHandler = new ScannerHandler(args);
-        scannerHandler.__START__();
+        }else localArgs = args;
+
+        logger.info("===============start!================");
+        localScreen = new Screen();
+        localScreen.pack();
+        localScreen.setVisible(true);
+
+        System.exit(0);
+//        if (args.length ==0 ) {
+//            logger.warn("args can not was null");
+//            System.exit(0);
+//        }
+//        pool2.execute(new Saver());
+//        ScannerHandler scannerHandler = new ScannerHandler(args);
+//        scannerHandler.__START__();
     }
 }

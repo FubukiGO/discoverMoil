@@ -1,8 +1,5 @@
 description = ''
 
-apply plugin: 'application'
-mainClassName = 'com.yk.Engine'
-
 dependencies {
     compile(
             "com.lmax:disruptor:${disruptorVersion}",
@@ -15,6 +12,21 @@ dependencies {
             'commons-io:commons-io:2.4',
             'org.apache.commons:commons-lang3:3.7',
             'commons-lang:commons-lang:2.6',
-            'commons-codec:commons-codec:1.10'
+            'commons-codec:commons-codec:1.10',
+            'com.intellij:forms_rt:6.0.5'
     )
 }
+
+jar.enabled = false
+shadowJar {
+    baseName = 'lord'
+    //classifier是生成jar包的后缀
+    classifier = null
+    version = version
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+
+}
+
+assemble.dependsOn(shadowJar)

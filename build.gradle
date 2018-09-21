@@ -6,6 +6,15 @@ buildscript {
         disruptorVersion = '3.4.2'
         guavaVersion = '21.0'
     }
+
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
+    }
+
+    repositories {
+        jcenter()
+    }
+
 }
 
 allprojects {
@@ -15,12 +24,16 @@ allprojects {
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'application'
+    apply plugin: "com.github.johnrengelman.shadow"
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    mainClassName = 'com.yk.core.Engine'
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 
 
     repositories {
+        mavenLocal()
         mavenCentral()
     }
 

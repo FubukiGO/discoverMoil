@@ -1,5 +1,8 @@
 package com.yk.core;
 
+import com.yk.service.handler.ScannerHandler;
+import com.yk.service.impl.Saver;
+import com.yk.service.impl.ShutdownProgress;
 import com.yk.util.ThreadPoolBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,6 +11,7 @@ import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import javax.swing.JFrame;
 
 /**
  * @Author: akhan
@@ -26,26 +30,17 @@ public class Engine {
 
     static String[] localArgs = null;
 
-    public static Screen localScreen = null;
-
     public static void main(String[] args) throws Exception {
         if (args.length == 0) {
-            logger.warn("args can not was null");
+            logger.error("arguments can not be `null`");
             System.exit(0);
-        }else localArgs = args;
-
-        logger.info("===============start!================");
-        localScreen = new Screen();
-        localScreen.pack();
-        localScreen.setVisible(true);
-
-        System.exit(0);
-//        if (args.length ==0 ) {
-//            logger.warn("args can not was null");
-//            System.exit(0);
-//        }
-//        pool2.execute(new Saver());
-//        ScannerHandler scannerHandler = new ScannerHandler(args);
-//        scannerHandler.__START__();
+        }
+        if ("shutdown".equals(args[0])){
+            new Thread(new ShutdownProgress()).run();
+        }else {
+            pool2.execute(new Saver());
+            ScannerHandler scannerHandler = new ScannerHandler(args);
+            scannerHandler.__START__();
+        }
     }
 }

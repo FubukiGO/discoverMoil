@@ -70,7 +70,6 @@ public class ScannerHandler {
                     matcher = null;
                     if (StringUtils.isNotBlank(route)){
                         pool1.execute(new Raider(route));
-                        Engine.localScreen.appendText(route);
                     }
                     logger.info(route);
                 }

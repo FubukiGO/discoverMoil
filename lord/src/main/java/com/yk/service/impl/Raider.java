@@ -64,9 +64,10 @@ public class Raider implements Runnable {
                 }
             }
             logger.info("---------scanning[" + router + "]end--------");
-
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            System.gc();
         }
     }
 }
